@@ -1,4 +1,4 @@
-package com.scripts.skilling.fletching.tasks;
+package com.scripts.runespan.tasks;
 
 import com.scripts.utils.Task;
 import org.powerbot.script.rt6.ClientContext;
@@ -6,9 +6,9 @@ import org.powerbot.script.rt6.ClientContext;
 /**
  * Created by Jeremy on 11/12/2014.
  */
-public class Fletch extends Task<ClientContext> {
+public class Siphon extends Task<ClientContext> {
 
-    public Fletch(ClientContext ctx) {
+    public Siphon(ClientContext ctx) {
         super(ctx);
     }
 

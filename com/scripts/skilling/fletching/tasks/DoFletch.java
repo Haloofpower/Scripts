@@ -6,9 +6,9 @@ import org.powerbot.script.rt6.ClientContext;
 /**
  * Created by Jeremy on 11/12/2014.
  */
-public class WalkTo extends Task<ClientContext> {
+public class DoFletch extends Task<ClientContext> {
 
-    public WalkTo(ClientContext ctx) {
+    public DoFletch(ClientContext ctx) {
         super(ctx);
     }
 
