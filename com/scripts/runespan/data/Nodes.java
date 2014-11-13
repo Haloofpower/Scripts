@@ -8,7 +8,7 @@ public enum Nodes {
     CYCLONE(1, 70455),
     MIND_STORM(1, 40456),
     WATER_POOL(5, 40457),
-    ROCK_FRAGMENT(9, -1),
+    ROCK_FRAGMENT(9, 70458),
     FIREBALL(14, 70459),
     VINE(17, 40460),
     FLESHY_GROWTH(20, 40461),
