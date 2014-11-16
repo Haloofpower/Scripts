@@ -30,6 +30,10 @@ public enum Creatures {
         return levelRequired;
     }
 
+    public int getCreatureID() {
+        return creatureID;
+    }
+
     private int levelRequired;
     private int creatureID;
 }

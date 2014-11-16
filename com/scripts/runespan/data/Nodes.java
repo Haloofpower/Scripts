@@ -28,6 +28,14 @@ public enum Nodes {
         this.nodeID = nodeID;
     }
 
+    public int getLevelRequired() {
+        return levelRequired;
+    }
+
+    public int getNodeID() {
+        return nodeID;
+    }
+
     private int levelRequired;
     private int nodeID;
 }

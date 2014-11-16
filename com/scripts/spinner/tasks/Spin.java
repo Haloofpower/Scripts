@@ -17,6 +17,7 @@ public class Spin extends Task<ClientContext> {
     private final Player player = ctx.players.local();
 
     private int lastExp = ctx.skills.experience(12);
+    private boolean currentlySpinning = false;
 
     public Spin(ClientContext ctx) {
         super(ctx);
@@ -57,21 +58,22 @@ public class Spin extends Task<ClientContext> {
                     topStair.interact("Climb-down", "Staircase");
                 }
                 break;
-            case SPINNING:
+            case OPEN_SPIN_INTER:
                 Lumbridge.currentTask = "Spinning";
                 final Widget spinning = ctx.widgets.widget(1370);
-                if (!spinning.valid()) {
-                    if (spinningWheel.interact("Spin", "Spinning Wheel")) {
-                        Condition.wait(new Callable<Boolean>() {
-                            @Override
-                            public Boolean call() throws Exception {
-                                return !player.inMotion();
-                            }
-                        }, 120, 50);
-                    }
-                } else {
-                    spinning.component(38).click();
+                if (spinningWheel.interact("Spin", "Spinning Wheel")) {
+                    Condition.wait(new Callable<Boolean>() {
+                        @Override
+                        public Boolean call() throws Exception {
+                            return spinning.component(38).visible();
+                        }
+                    }, 120, 50);
                 }
+                spinning.component(38).click();
+                currentlySpinning = true;
+                break;
+            case SPINNING:
+                Lumbridge.currentTask = "Spinning";
                 do {
                     if (Condition.wait(new Callable<Boolean>() {
                         @Override
@@ -82,7 +84,10 @@ public class Spin extends Task<ClientContext> {
                         Lumbridge.amountSpun += 1;
                         lastExp += 15;
                     }
-                } while(player.animation() == 1563 && !ctx.backpack.select().id(1779).isEmpty());
+                } while(!ctx.backpack.select().id(1779).isEmpty());
+                if (ctx.backpack.select().id(1779).isEmpty()) {
+                    currentlySpinning = false;
+                }
                 break;
         }
     }
@@ -91,10 +96,13 @@ public class Spin extends Task<ClientContext> {
        if (player.tile().floor() == 2) {
            return State.DOWN_STAIRS;
        }
+       if (!ctx.backpack.select().id(1779).isEmpty() && !currentlySpinning && player.tile().floor() == 1) {
+           return State.OPEN_SPIN_INTER;
+       }
        return State.SPINNING;
     }
 
     public enum State {
-        SPINNING, DOWN_STAIRS
+        SPINNING, DOWN_STAIRS, OPEN_SPIN_INTER
     }
 }

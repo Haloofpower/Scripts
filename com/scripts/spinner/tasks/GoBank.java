@@ -65,12 +65,12 @@ public class GoBank extends Task<ClientContext> {
                 break;
             case OPEN_BANK:
                 Lumbridge.currentTask = "Banking";
-                ctx.camera.turnTo(bank);
                 if (ctx.movement.step(new Tile(3208, 3220, 2))) {
+                    ctx.camera.turnTo(bank);
                     Condition.wait(new Callable<Boolean>() {
                         @Override
                         public Boolean call() throws Exception {
-                            return !player.inMotion();
+                            return !player.inMotion() || player.tile() == new Tile(3208, 3220, 2);
                         }
                     }, 120, 50);
                     bank.interact("Bank", "Bank booth");
